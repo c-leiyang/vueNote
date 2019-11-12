@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in fruits" v-cloak>{{item}}</li>
+        </ul>
+        <ul>
+            <li v-cloak :key="index" v-for="(item, index) in hreos">{{index}}、{{item.name}}----{{item.blod}}</li>
+        </ul>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                fruits: ['banana', 'apple', 'orange'],
+                hreos: [
+                    {
+                        name: '后裔',
+                        blod: 3000
+                    },
+                    {
+                        name: '猴子',
+                        blod: 5000
+                    },
+                    {
+                        name: '亚瑟',
+                        blod: 10000
+                    }
+                ]
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

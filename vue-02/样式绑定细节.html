@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active {
+            width: 100px;
+            height: 100px;
+            background-color: #ff3040;
+        }
+
+        .border {
+            border: 1px solid greenyellow;
+        }
+
+        .fontSize {
+            font-size: 20px;
+        }
+
+        .heigth {
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:class="[isActive, isBoreder]">123</div>
+        <button v-on:click="toggle">切换</button>
+        <!-- 绑定样式 数组和对象可以混合结合使用 -->
+        <div :class="[isActive, { fontSize : size}]">123</div>
+        <!-- 绑定样式简写样式 -->
+        <div :class="classArr">123</div>
+        <div :class="classObj"></div>
+        <!-- 默认样式显示，默认样式会和绑定样式合并，不会出现默认样式不显示的情况 -->
+        <div class="heigth" :class="classObj"></div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isActive: 'active',
+                isBoreder: 'border',
+                size: true,
+                classArr: ['active', 'fontSize'],
+                classObj: {
+                    active: true,
+                    border: true
+                }
+            },
+            methods: {
+                toggle: function () {
+                    if (this.isActive == '' || this.isBoreder == '') {
+                        this.isActive = 'active';
+                        this.isBoreder = 'border'
+                    } else {
+                        this.isActive = '';
+                        this.isBoreder = ''
+                    }
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

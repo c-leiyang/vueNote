@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <a v-bind:href="url">百度</a>
+        <a :href="url">缩写形式</a>
+        <a v-bind="{ href:'http://www.itcast.cn/id=' + id }">动态参数</a>
+        <a @click="toggle">切换</a>
+    </div>
+    <script src="./js/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                url: 'http://www.baidu.com',
+                id: 1
+            },
+            methods: {
+                toggle: function () {
+                    this.url = 'http://www.mi.cn'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

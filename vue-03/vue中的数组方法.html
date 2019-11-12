@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input type="text" v-model="num">
+    <button v-on:click="add">变异方法添加</button>
+    <button v-on:click="add2">替换方法添加</button>
+    <button v-on:click="del">删除</button>
+    <p v-for="(item, index) in arr" v-bind:key="index">{{item}}</p>
+  </div>
+  <script src="./js/vue.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        num: '',
+        arr: [1, 2, 3]
+      },
+      methods: {
+        add: function () {
+          this.arr.push(this.num)
+        },
+        add2: function () {
+          this.arr = this.arr.concat(this.num)
+        },
+        del: function () {
+          this.arr.pop()
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 1.先写页面结构（创建需要vue托管的容器） -->
+    <div id="app">
+        <!-- 4.使用插值表达式将数据展示到页面上 -->
+        <p>{{msg}}</p>
+        <!-- 注：插值表达式中可以进行一些简单的计算 -->
+        <p>{{ 1 + 1 }}</p>
+        <p>{{ age === 18 ? '成年' : '未成年'}}</p>
+    </div>
+    <!-- 2.引入vue外部的js文件 -->
+    <script src="./js/vue.js"></script>
+    <!-- 3.创建vue的基础结构 -->
+    <script>
+        var vm = new Vue({
+            //页面挂载的位置，就是指将页面的哪一个部分交给vue来管理(一般使用css选择器进行托管，也可以使用dom元素)
+            el: '#app',
+            //页面需要绑定的数据
+            data: {
+                msg: 'hello world!',
+                age: '18'
+            }
+        })
+    </script>
+</body>
+
+</html>

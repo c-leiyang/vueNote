@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .grid th,
+    td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+
+    .grid th {
+      background-color: #F3DCAB;
+    }
+
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="grid">
+      <div>
+        <h1>图书管理</h1>
+        <div class="book">
+          <div>
+            <label for="id">
+              编号：
+            </label>
+            <input type="text" id="id" v-model="id" :disabled="flag">
+            <label for="name">
+              名称：
+            </label>
+            <input type="text" id="name" v-model="name">
+            <button @click="add">提交</button>
+          </div>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in books" :key="item.id">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.date}}</td>
+            <td>
+              <a href="" @click.prevent="modify(item.id)">修改</a>
+              <span>|</span>
+              <a href="" @click.prevent="del(item.id)">删除</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/vue.js"></script>
+  <script type="text/javascript">
+    /*
+      图书管理-图书列表展示功能
+      注意事项：<a href="" @click.prevent>修改</a>
+      事件绑定时，可以只添加修饰符，而不绑定事件函数
+    */
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        books: [{
+          id: 1,
+          name: '三国演义',
+          date: ''
+        }, {
+          id: 2,
+          name: '水浒传',
+          date: ''
+        }, {
+          id: 3,
+          name: '红楼梦',
+          date: ''
+        }, {
+          id: 4,
+          name: '西游记',
+          date: ''
+        }],
+        id: '',
+        name: '',
+        flag: false
+      },
+      methods: {
+        //添加
+        add: function () {
+          if (this.flag) {
+            this.books.some((item)=>{
+              if(item.id == this.id){
+                item.name = this.name
+                return true
+              }
+            })
+            this.flag = false
+            this.id = this.name = ''
+          } else {
+            this.books.push({ id: this.id, name: this.name, date: new Date() })
+            this.id = this.name = ''
+          }
+
+        },
+
+        //修改
+        modify: function (id) {
+          //禁止修改id
+          this.flag = true
+          // console.log(id)
+          var book = this.books.filter(function (item) {
+            return item.id == id
+          })
+          this.id = book[0].id
+          this.name = book[0].name
+        },
+
+        //删除
+        del: function(id){
+          this.books = this.books.filter(function(item){
+            return item.id != id
+          })
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

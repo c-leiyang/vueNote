@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p v-if="age < 18">未成年</p>
+        <p v-else-if="age >= 18">成年了</p>
+        <p v-show="isFlag">我是p元素</p>
+        <button v-on:click="toggle">切换</button>
+    </div>
+    <script src="./js/vue.js"></script>
+
+    <script>
+        // v-if和v-show的区别
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                age: 17,
+                isFlag : false
+            },
+            methods: {
+                toggle: function () {
+                    this.age = 20;
+                    this.isFlag = !this.isFlag
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

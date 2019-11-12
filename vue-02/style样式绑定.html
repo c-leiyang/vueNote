@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active {
+            width: 100px;
+            height: 100px;
+            background-color: #ff3040;
+        }
+
+        .border {
+            border: 1px solid greenyellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 绑定一个对象，对象的属性是css属性，属性值是data里面声明的变量 -->
+        <div :style="{ width : widthStyle, height : heightStyle, backgroundColor : bcg}">123</div>
+        <!-- 将样式直接提取成一个对象 -->
+        <div :style="objStyle">456</div>
+        <!-- 数组写法，数组的每一项都是一个对象 -->
+        <div :style="[objStyle]">456</div>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                widthStyle: '100px',
+                heightStyle: '100px',
+                bcg: 'greenyellow',
+                objStyle: {
+                    width: '200px',
+                    height: '200px',
+                    backgroundColor: 'greenyellow'
+                }
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

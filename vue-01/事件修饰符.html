@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div id="father" @click="father">
+            <!-- 阻止事件冒泡.stop -->
+            <button @click.stop="son">son</button>
+        </div>
+        <a href="http://www.baidu.com" @click.prevent="baidu">baidu</a>
+    </div>
+
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data:{
+                age:19
+            },
+            methods:{
+                son:function(){
+                    console.log('son')
+                },
+                father:function(){
+                    console.log('father')
+                },
+                baidu:function(){
+                    console.log('阻止默认行为')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- <input type="text" v-model="age"> -->
+        <!-- number是将输入框的值转换成数值型 -->
+        <input type="text" v-model.number="age">
+        <!-- tirm是去除输入内容左右两端的空格 -->
+        <input type="text" v-model.trim="trimVal">
+        <button @click="add">提交</button>
+    </div>
+    <script src="./js/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data: {
+                age:18,
+                trimVal:'',
+            },
+            methods: {
+                add:function(){
+                    console.log(this.age + 10)
+                    console.log(this.trimVal)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

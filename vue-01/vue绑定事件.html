@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p v-text="age"></p>
+        <button v-on:click="age++">++</button>
+        <!-- 如果事件直接绑定函数名称，那么默认会传递事件对象作为事件函数的第一个参数 -->
+        <button v-on:click="add">++</button>
+         <!-- 2、如果事件绑定函数调用，那么事件对象必须作为最后一个参数显示传递，并且事件对象的名称必须是$event -->
+        <button v-on:click="add2('1','2',$event)">++</button>
+        <button v-on:click="age--">--</button>
+        <button v-on:click="reduce">--</button>
+        <button v-on:click="reduce()">--</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                age: 18
+            },
+            // methods  中 主要是定义一些函数
+            methods: {
+                add: function (event) {
+                    console.log(event)
+                    console.log(event.target.innerHTML)
+                    // 这里的this是Vue的实例对象+
+                    console.log(this === vm)
+                    // 在函数中 想要使用data里面的数据 一定要加this 
+                    this.age++
+                },
+                add2: function (num1,mun2,event) {
+                    console.log(event)
+                    console.log(num1,mun2)
+                    console.log(event.target.innerHTML)
+                    console.log(event.target.tagName)
+                    // 这里的this是Vue的实例对象+
+                    console.log(this === vm)
+                    // 在函数中 想要使用data里面的数据 一定要加this 
+                    this.age++
+                },
+                reduce: function () {
+                    this.age--
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

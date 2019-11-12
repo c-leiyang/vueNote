@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{reverse}}</p>
+        <p>{{priceAll}}</p>
+    </div>
+    <script src="./js/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                str: 'hello',
+                price: 10,
+                num: 5
+            },
+            computed: {
+                reverse: function () {
+                    return this.str.split('').reverse().join('')
+                },
+                priceAll:function(){
+                    return this.price * this.num
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

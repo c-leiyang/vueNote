@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p v-cloak>
+            {{msg}}
+        </p>
+        <p v-text="msg"></p>
+        <!-- v-once显示内容之后不再具有数据响应式的功能，应用场景：如果显示数据后不需要修改，可以使用v-once，可以提高性能 -->
+        <p v-once v-text="msg"></p>
+        <p v-html="name"></p>
+        <p v-pre>{{curry不解析原样输出}}</p>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'hello world!',
+                name:'<p><span>Thompson</span></p>'
+            }
+        })
+    </script>
+</body>
+
+</html>

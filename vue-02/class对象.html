@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .active {
+            width: 100px;
+            height: 100px;
+            background-color: #ff3040;
+        }
+
+        .border {
+            border: 1px solid greenyellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div v-bind:class="{ active : isTrue ,border : isBoreder}"></div>
+        <button v-on:click="toggle">切换</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                isTrue: true,
+                isBoreder: true
+            },
+            methods: {
+                toggle: function () {
+                    this.isTrue = !this.isTrue;
+                    this.isBoreder = !this.isBoreder
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

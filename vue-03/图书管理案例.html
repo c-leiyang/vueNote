@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .grid th,
+    td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+
+    .grid th {
+      background-color: #F3DCAB;
+    }
+
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="grid">
+      <div>
+        <h1>图书管理</h1>
+        <div class="book">
+          <div>
+            <label for="id">
+              编号：
+            </label>
+            <input type="text" id="id" v-model="id" v-focus :disabled="flag">
+            <label for="name">
+              名称：
+            </label>
+            <input type="text" id="name" v-model="name">
+            <button @click="addBook" :disabled="submitForm">提交</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <span>图书总数: {{allTotal}}</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr :key='item.id' v-for='item in books'>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.date | formateData('yyyy-MM-dd hh:mm:ss')}}</td>
+            <td>
+              <a href="" @click.prevent="modify(item.id)">修改</a>
+              <span>|</span>
+              <a href="" @click.prevent="del(item.id)">删除</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="js/vue.js"></script>
+  <script type="text/javascript">
+    /*
+      图书管理-图书列表展示功能
+      注意事项：<a href="" @click.prevent>修改</a>
+      事件绑定时，可以只添加修饰符，而不绑定事件函数
+    */
+    Vue.directive('focus', {
+      inserted: function (el) {
+        el.focus()
+      }
+    })
+    //过滤器
+    Vue.filter('formateData', function (value, arg) {
+      function dateFormat(date, format) {
+        if (typeof date === "string") {
+          var mts = date.match(/(\/Date\((\d+)\)\/)/);
+          if (mts && mts.length >= 3) {
+            date = parseInt(mts[2]);
+          }
+        }
+        date = new Date(date);
+        if (!date || date.toUTCString() == "Invalid Date") {
+          return "";
+        }
+        var map = {
+          "M": date.getMonth() + 1, //月份 
+          "d": date.getDate(), //日 
+          "h": date.getHours(), //小时 
+          "m": date.getMinutes(), //分 
+          "s": date.getSeconds(), //秒 
+          "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+          "S": date.getMilliseconds() //毫秒 
+        };
+
+        format = format.replace(/([yMdhmsqS])+/g, function (all, t) {
+          var v = map[t];
+          if (v !== undefined) {
+            if (all.length > 1) {
+              v = '0' + v;
+              v = v.substr(v.length - 2);
+            }
+            return v;
+          } else if (t === 'y') {
+            return (date.getFullYear() + '').substr(4 - all.length);
+          }
+          return all;
+        });
+        return format;
+      }
+      return dateFormat(value, arg)
+    })
+    var vm = new Vue({
+      el: '#app',
+      data:{
+        books: [],
+        id: '',
+        name: '',
+        flag: false,
+        submitForm: false
+      },
+
+      //生命周期
+      mounted: function () {
+        var data = [{
+          id: 1,
+          name: '三国演义',
+          date: new Date()
+        }, {
+          id: 2,
+          name: '水浒传',
+          date: new Date()
+        }, {
+          id: 3,
+          name: '红楼梦',
+          date: new Date()
+        }, {
+          id: 4,
+          name: '西游记',
+          date: new Date()
+        }]
+        this.books = data
+      },
+      methods: {
+        //添加
+        addBook: function () {
+          if (this.flag) {
+            this.books.some((item) => {
+              if (item.id == this.id) {
+                item.name = this.name
+                return true
+              }
+            })
+            this.id = this.name = ''
+            this.flag = false
+          } else {
+            this.books.push({ id: this.id, name: this.name, date: new Date() })
+            this.id = this.name = ''
+          }
+
+        },
+
+        modify: function (id) {
+          //禁用修改id
+          this.flag = true
+          // console.log(id)
+          var book = this.books.filter(function (item) {
+            return item.id === id
+          })
+          // console.log(book)
+          this.id = book[0].id
+          this.name = book[0].name
+        },
+
+        //删除
+        del: function (id) {
+          //方法一
+          // var index = this.books.findIndex(function(item){
+          //   return item.id == id
+          // })
+          //根据id删除数据
+          // this.books.splice(index, 1)
+
+          //方法二
+          this.books = this.books.filter(function (item) {
+            return item.id != id
+          })
+        },
+      },
+
+      //计算属性
+      computed: {
+        allTotal: function () {
+          return this.books.length
+        }
+      },
+
+      //侦听器
+      watch: {
+        //对图书名进行监听
+        name: function (newVal, oldVla) {
+          var isTrue = this.books.some(function (item) {
+            return item.name == newVal
+          })
+          if (isTrue) {
+            //图书名已存在禁用提交按钮
+            this.submitForm = true
+          } else {
+            this.submitForm = false
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
